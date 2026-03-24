@@ -15,12 +15,13 @@ app.use(express.json());
 
 app.post("/message", async (req, res) => {
   console.log(req.body);
+  const chatHistory = req.body.chatHistory || [];
+
   const response = await cohere.chat({
     model: "command-a-03-2025",
-    messages: req.body.message,
+    messages: chatHistory, //крч нужно вернуть месажес как было, пример в акинаторе
   });
-
-  console.log(response);
+  res.json({ response });
 });
 
 app.listen(3000, () => {
